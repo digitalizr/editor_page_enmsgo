@@ -1,0 +1,103 @@
+/* Editor container */
+.editorContainer {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #292929;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Heading */
+.heading {
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Input fields */
+.input,
+.textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #444;
+    outline: none;
+    /* Subtle border */
+    border-radius: 5px;
+    background: #1E1E1E;
+    /* Same as body background */
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.textarea {
+    resize: none;
+}
+
+/* Button */
+.button {
+    padding: 12px;
+    background: #0078D4;
+    /* A sharp contrast color for action */
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button:hover {
+    background: #005a9e;
+}
+
+
+.writebtn {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.6rem;
+    color: #ffffff;
+    border: none;
+    outline: none;
+}
+
+/* .input {
+    outline: none;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    color: #ffffff;
+} */
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .editorContainer {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .heading {
+        font-size: 20px;
+    }
+
+    .input,
+    .textarea {
+        font-size: 14px;
+    }
+
+    .button {
+        font-size: 14px;
+    }
+}

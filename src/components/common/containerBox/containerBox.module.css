@@ -1,0 +1,51 @@
+.cBCon {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 5px;
+    color: #FFFFFF;
+    box-shadow: 0px 0.2px 1px rgba(0, 0, 0, 0.9);
+    padding: 10px 10px;
+    border-radius: 12px;
+    min-height: 500px;
+    height: auto;
+    max-width: 500px;
+
+
+    h3 {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    p {
+        font-size: 12px;
+        font-weight: 300;
+        line-height: 1.7;
+    }
+}
+
+.cBImg {
+    width: 100%;
+    background-size: cover;
+    border-radius: 15px;
+    padding: 10px 0;
+}
+
+.btnWrapper {
+    display: flex;
+    padding: 10px;
+}
+
+@media screen and (max-width : 1000px) {
+    .cBCon {
+        height: auto;
+    }
+
+    .cBImg {
+        width: 300px;
+    }
+    .btnWrapper {
+        position: static;
+    }
+    
+}

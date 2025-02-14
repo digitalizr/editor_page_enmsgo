@@ -1,0 +1,106 @@
+.writecontainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.heading {
+    font-weight: 300;
+    margin: 0;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    min-height: 700px;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.writebtn {
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.6rem;
+    color: #ffffff;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: none;
+    outline: none;
+}
+
+.input {
+    outline: none;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    color: #ffffff;
+}
+
+.categorycontainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    label {
+        font-size: 14px;
+    }
+
+    select {
+        padding: 0.5rem;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        border: none;
+        outline: none;
+    }
+}
+
+.textarea {
+    padding: 10px;
+    border-radius: 6px;
+    background-color: #ffffff;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333;
+    resize: vertical;
+}
+
+.reactquill {
+    flex: 1;
+    height: auto;
+    min-height: 300px;
+    flex-direction: column;
+    border-radius: 0.75rem;
+    border: 1px solid #ffffff;
+    width: 100%;
+}
+
+.submitbtn {
+    padding: 0.5rem;
+    margin-top: 1rem;
+    border-radius: 0.75rem;
+    width: 9rem;
+    font-weight: 500;
+    background-color: #ffffff;
+    border: none;
+    outline: none;
+    color: black;
+    transition: 0.5s all ease-in-out;
+    display: flex;
+    justify-content: center;
+}
+
+.submitbtn:hover {
+    background-color: black;
+    color: #ffffff;
+    cursor: pointer;
+}
