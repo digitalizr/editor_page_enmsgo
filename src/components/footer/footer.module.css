@@ -1,0 +1,62 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    color: white;
+    z-index: 100;
+    box-shadow: 0px -0.2px 1px rgba(0, 0, 0, 0.5);
+    padding: 10
+
+}
+
+.logo {
+    flex: 1;
+}
+
+.logoImg {
+    height: 40px;
+}
+
+.socialIcons {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    justify-content: center;
+}
+
+.iconLink {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.iconLink:hover {
+    color: #1e90ff;
+    /* Change color on hover */
+}
+
+.logout {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.logoutButton:hover {
+    background-color: white;
+    color: black;
+}

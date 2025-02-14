@@ -59,6 +59,8 @@ form {
     outline: none;
     color: black;
     transition: 0.5s all ease-in-out;
+    display: flex;
+    justify-content: center;
 }
 
 .submitbtn:hover {
@@ -66,7 +68,6 @@ form {
     color: #ffffff;
     cursor: pointer;
 }
-
 .authredirect {
     font-size: 14px;
     font-weight: 400;
