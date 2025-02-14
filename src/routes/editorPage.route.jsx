@@ -28,6 +28,7 @@ const Editor = ({ initialData }) => {
     alertsImg: false,
     dashboardImg: false,
     reportGenImg: false,
+    heroImg : false
   });
 
   // Handle input changes
@@ -105,6 +106,29 @@ const Editor = ({ initialData }) => {
       <h2 className={styles.heading}>Edit Content</h2>
       <form onSubmit={handleSubmit} className={styles.form}>
         {/* Text Inputs */}
+        <div>
+          <input
+            type="file"
+            accept="image/*"
+            id="heroImg"
+            style={{ display: "none" }}
+            onChange={(e) => handleFileChange(e, "heroImg")}
+          />
+          <label htmlFor="heroImg" className={styles.writebtn}>
+            {uploadingStates.heroImg ? ( 
+              <Spinner color="#FFFFFF" size={20} />
+            ) : formData.heroImg ? (
+              <img
+                className={styles.uploadpreview}
+                src={formData.heroImg}
+                alt="heroImg"
+                style={{ height: "80px", borderRadius: "10px" }}
+              />
+            ) : (
+              "Upload hero Image"
+            )}
+          </label>
+        </div>
         <input
           type="text"
           name="heading1"
