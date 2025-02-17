@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/blog.module.css";
-import BlogBox from "../components/common/containerBox/BlogBox";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import Heading from "../components/common/introHeading/Heading";
+import EnerygyMgtBox from "../components/common/containerBox/EnerygyMgtBox";
 
-const BlogPage = () => {
+const EnergyManagement = () => {
   const [loading, setLoading] = useState(false);
-  const [blogList, setBlogList] = useState([]);
+  const [energyMgtList, setEnergyMgtList] = useState([]);
 
   useEffect(() => {
-    getBlogs();
+    getEnergyManagement();
   }, []);
 
-  const getBlogs = async () => {
+  const getEnergyManagement = async () => {
     setLoading(true);
     try {
-      const querySnapshot = await getDocs(collection(db, "blogs"));
+      const querySnapshot = await getDocs(collection(db, "energy-management"));
       const tempData = [];
       querySnapshot.forEach((doc) => {
         tempData.push({ id: doc.id, ...doc.data() });
       });
-      setBlogList(tempData);
+      setEnergyMgtList(tempData);
     } catch (error) {
       console.log("Something went wrong:", error);
       setLoading(false);
@@ -53,14 +53,14 @@ const BlogPage = () => {
 
   return (
     <div>
-      <Heading heading={"Write your Blogs"} id="blogs" />
+      <Heading heading={"Write about Energy Management"} id="energy-management" />
 
       <div className={styles.blogContainer}>
-        <h2>Blogs.</h2>
+        <h2>Energy Management.</h2>
         <div className={styles.containerWrapper}>
-          {blogList.length > 0 ? (
-            blogList.map((blog) => {
-              return <BlogBox data={blog} key={blog?.id} />;
+          {energyMgtList.length > 0 ? (
+            energyMgtList.map((blog) => {
+              return <EnerygyMgtBox data={blog} key={blog?.id}/>
             })
           ) : (
             <h3 style={{ color: "white" }}>
@@ -71,9 +71,9 @@ const BlogPage = () => {
                   textDecoration: "underline",
                   padding: "0 10px",
                 }}
-                to={"/write?collection=blogs"}
+                to={"/write?collection=energy-management"}
               >
-                Write Blog
+               Energy-Management
               </Link>
             </h3>
           )}
@@ -83,4 +83,4 @@ const BlogPage = () => {
   );
 };
 
-export default BlogPage;
+export default EnergyManagement

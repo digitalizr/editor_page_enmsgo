@@ -49,15 +49,6 @@ function Navbar() {
           className={`${styles.mobileLinkList} ${open ? styles.active : ""}`}
         >
           <NavLink
-            to="/"
-            onClick={() => setOpen(false)}
-            className={({ isActive }) =>
-              `${styles.menuitem} ${isActive ? styles.activeLink : ""}`
-            }
-          >
-            Home
-          </NavLink>
-          <NavLink
             to="/blogs"
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
@@ -74,6 +65,15 @@ function Navbar() {
             }
           >
             Use Cases
+          </NavLink>
+          <NavLink
+            to="/energy-management"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `${styles.menuitem} ${isActive ? styles.activeLink : ""}`
+            }
+          >
+            Energy Management
           </NavLink>
           <div
             className={styles.mobEndContainer}
@@ -99,15 +99,6 @@ function Navbar() {
       {/* desktop menu */}
       <div className={styles.desktopmenu}>
         <NavLink
-          to="/"
-          onClick={() => setOpen(false)}
-          className={({ isActive }) =>
-            `${styles.menuitem} ${isActive ? styles.activeLink : ""}`
-          }
-        >
-          Home
-        </NavLink>
-        <NavLink
           to="/blogs"
           onClick={() => setOpen(false)}
           className={({ isActive }) =>
@@ -124,6 +115,15 @@ function Navbar() {
           }
         >
           Use Cases
+        </NavLink>
+        <NavLink
+          to="/energy-management"
+          onClick={() => setOpen(false)}
+          className={({ isActive }) =>
+            `${styles.menuitem} ${isActive ? styles.activeLink : ""}`
+          }
+        >
+          Energy Management
         </NavLink>
         <div className={styles.mobEndContainer}>
           <div>

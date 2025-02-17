@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
@@ -16,6 +16,9 @@ const WritePage = () => {
   const [img, setImg] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const collectionName = searchParams.get("collection");
 
   useEffect(() => {
     if (img)
@@ -38,8 +41,13 @@ const WritePage = () => {
         setLoading(false);
         return;
       }
+      if (!collectionName) {
+        toast.error("Collection name is missing in the URL");
+        setLoading(false);
+        return;
+      }
 
-      const docRef = await addDoc(collection(db, "blogs"), {
+      const docRef = await addDoc(collection(db, collectionName), {
         title,
         img: cover || "",
         subTitle,
@@ -47,8 +55,8 @@ const WritePage = () => {
       });
 
       setLoading(false);
-      toast.success("Blog Created Successfully");
-      navigate(`/singleblog?id=${docRef?.id}`);
+      toast.success(`${collectionName} Created Successfully`);
+      navigate(`/singleblog?id=${docRef?.id}&collection=${collectionName}`);
     } catch (error) {
       console.error("Error adding document:", error);
       toast.error("Error adding document");

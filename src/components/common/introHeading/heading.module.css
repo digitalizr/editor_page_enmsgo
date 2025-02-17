@@ -1,0 +1,64 @@
+.intro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+
+    h1 {
+        font-size: 3rem;
+        line-height: 2rem;
+        font-weight: 700;
+        color: #FFFFFF;
+    }
+}
+
+.introbtn {
+    position: relative;
+}
+
+.svg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.1em;
+    animation: spin 1s linear infinite;
+    animation-duration: 10000ms;
+}
+
+
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.introbtnbtm {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
+    border-radius: 9999px;
+    width: 5rem;
+    height: 5rem;
+    background-color: #1E40AF;
+}
+
+@media screen and (max-width : 786px) {
+    .intro {
+        h1 {
+            display: none;
+        }
+    }
+
+    .introbtn {
+        margin: 0 auto;
+    }
+}

@@ -3,8 +3,8 @@ import styles from "./containerBox.module.css";
 import Button from "../button/Button";
 import { useNavigate } from "react-router-dom";
 
-const ContainerBox = ({
-  blog,
+const UseCaseBox = ({
+  data,
   headingClr = "#FFFFFF",
   subHeadingClr = "#FFFFFF",
   descClr = "#FFFFFF",
@@ -12,27 +12,29 @@ const ContainerBox = ({
   const navigate = useNavigate();
 
   const handleReadMore = () => {
-    navigate(`/singleblog?id=${blog.id}`);
+    navigate(`/singleblog?id=${data.id}&collection=usecase`);
   };
 
   const handleShare = () => {
-    const blogUrl = `${window.location.origin}/singleblog?id=${blog.id}`;
-    const shareText = `${blog?.title}\n\n${blog?.subTitle}\n\n${blog?.desc.slice(0, 100)}...`;
-  
+    const blogUrl = `${window.location.origin}/singleblog?id=${data.id}`;
+    const shareText = `${data?.title}\n\n${
+      data?.subTitle
+    }\n\n${data?.desc.slice(0, 100)}...`;
+
     if (navigator.share) {
       navigator
         .share({
-          title: blog.title,
+          title: data.title,
           text: shareText,
           url: blogUrl,
         })
         .catch((error) => console.error("Sharing failed", error));
     } else {
-      const encodedTitle = encodeURIComponent(blog?.title);
-      const encodedDescription = encodeURIComponent(blog?.desc.slice(0, 150));
+      const encodedTitle = encodeURIComponent(data?.title);
+      const encodedDescription = encodeURIComponent(data?.desc.slice(0, 150));
       const encodedUrl = encodeURIComponent(blogUrl);
-      const encodedImage = encodeURIComponent(blog?.img);
-  
+      const encodedImage = encodeURIComponent(data?.img);
+
       // Social Media Share URLs
       const shareOptions = {
         linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
@@ -40,21 +42,20 @@ const ContainerBox = ({
         facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
         whatsapp: `https://api.whatsapp.com/send?text=${encodedTitle} - ${encodedUrl}`,
       };
-  
+
       // Open the default share option (LinkedIn as fallback)
       window.open(shareOptions.linkedin, "_blank");
     }
   };
-  
 
   return (
     <div className={styles.cBCon}>
-      <img src={blog?.img} alt="img" className={styles.cBImg} />
-      <h3 style={{ color: headingClr }}> {blog?.title} </h3>
-      <h3 style={{ color: subHeadingClr }}> {blog?.subTitle} </h3>
+      <img src={data?.img} alt="img" className={styles.cBImg} />
+      <h3 style={{ color: headingClr }}> {data?.title} </h3>
+      <h3 style={{ color: subHeadingClr }}> {data?.subTitle} </h3>
       <p
         style={{ color: descClr }}
-        dangerouslySetInnerHTML={{ __html: blog?.desc.slice(0, 90) + " ..." }}
+        dangerouslySetInnerHTML={{ __html: data?.desc.slice(0, 90) + " ..." }}
       ></p>
       <div className={styles.btnWrapper}>
         <Button
@@ -87,4 +88,4 @@ const ContainerBox = ({
   );
 };
 
-export default ContainerBox;
+export default UseCaseBox;

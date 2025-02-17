@@ -41,21 +41,9 @@ const MainLayout = () => {
     <div className={styles.layoutcontainer}>
       <Navbar />
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
 
 export default MainLayout;
-
-// Fetch user data with the token
-// axios
-//   .get(`${import.meta.env.VITE_API_URL}/users/me`, {
-//     headers: { Authorization: `Bearer ${token}` },
-//   })
-//   .then((res) => {
-//     dispatch(setAuth(res.data.data));
-//   })
-//   .catch(() => {
-//     Cookies.remove("authToken");
-//   });

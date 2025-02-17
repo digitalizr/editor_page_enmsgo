@@ -13,6 +13,8 @@ import WritePage from "./routes/writePage.route.jsx";
 import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import SingleBlogPost from "./routes/singleBlogPage.route.jsx";
+import UseCase from "./routes/useCasePage.route.jsx";
+import EnergyManagement from "./routes/energyManagement.route.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/use-cases",
-        element: <HomePage />,
+        element: <UseCase />,
+      },
+      {
+        path: "/energy-management",
+        element: <EnergyManagement />,
       },
       {
         path: "/write",

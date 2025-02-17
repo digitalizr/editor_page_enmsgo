@@ -17,6 +17,7 @@ const SingleBlogPost = () => {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const blogId = searchParams.get("id");
+  const collection = searchParams.get("collection");
   const [blog, setBlog] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [cover, setCover] = useState("");
@@ -43,7 +44,7 @@ const SingleBlogPost = () => {
     setLoadingBlog(true);
     try {
       if (!blogId) return;
-      const docRef = doc(db, "blogs", blogId);
+      const docRef = doc(db, collection, blogId);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setBlog(docSnap.data());
@@ -68,10 +69,10 @@ const SingleBlogPost = () => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await deleteDoc(doc(db, "blogs", blogId));
+      await deleteDoc(doc(db, collection, blogId));
       setLoading(false);
-      toast.success("Blog Deleted Successfully...");
-      navigate("/blogs");
+      toast.success(`${collection} Deleted Successfully...`);
+      navigate("/");
     } catch (error) {
       toast.error("Something went wrong... : ", error);
       setLoading(false);
@@ -84,7 +85,7 @@ const SingleBlogPost = () => {
     setLoading(true);
     try {
       if (!blogId) return;
-      const docRef = doc(db, "blogs", blogId);
+      const docRef = doc(db, collection, blogId);
       await updateDoc(docRef, {
         img: cover || blog?.img,
         title,
@@ -92,23 +93,24 @@ const SingleBlogPost = () => {
         desc,
       });
       setLoading(false);
-      toast.success("Blog Updated Successfully");
+      toast.success(`${collection} Updated Successfully`);
       setModalIsOpen(false);
       getBlog();
     } catch (error) {
       setLoading(false);
-      toast.error("Something went wrong while updating blog... : ", error);
+      toast.error(
+        `Something went wrong while updating ${collection}... : `,
+        error
+      );
     } finally {
       setLoading(false);
     }
   };
 
-
-
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
     if (!file) {
-      toast.error("Please choose an Image...")
+      toast.error("Please choose an Image...");
       return;
     }
     const data = await uploadFile(file);
@@ -118,7 +120,7 @@ const SingleBlogPost = () => {
   const handleContentImageChange = async (event) => {
     const file = event.target.files[0];
     if (!file) {
-      toast.error("Please choose an Image...")
+      toast.error("Please choose an Image...");
       return;
     }
     const data = await uploadFile(file);
@@ -161,10 +163,10 @@ const SingleBlogPost = () => {
             className={styles.editButton}
             onClick={() => setModalIsOpen(true)}
           >
-            <FaEdit /> Edit Blog
+            <FaEdit /> Edit {collection}
           </button>
           <button className={styles.deleteButton} onClick={handleDelete}>
-            <FaTrash /> Delete Blog
+            <FaTrash /> Delete {collection}
           </button>
         </div>
         <Modal
