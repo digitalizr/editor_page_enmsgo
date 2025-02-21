@@ -72,7 +72,7 @@ const WritePage = () => {
       return;
     }
     const data = await uploadFile(file);
-    setCover(data?.Location);
+    setCover(data);
   };
 
   const handleContentImageChange = async (event) => {
@@ -82,7 +82,7 @@ const WritePage = () => {
       return;
     }
     const data = await uploadFile(file);
-    setImg(data?.Location);
+    setImg(data);
   };
 
   return (

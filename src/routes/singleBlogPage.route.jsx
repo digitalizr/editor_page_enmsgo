@@ -28,7 +28,6 @@ const SingleBlogPost = () => {
   const [loading, setLoading] = useState(false);
   const [loadingBlog, setLoadingBlog] = useState(false);
   const [contentImg, setContentImg] = useState("");
-  const [newContentImages, setNewContentImages] = useState([]);
   useEffect(() => {
     getBlog();
   }, []);
@@ -103,12 +102,6 @@ const SingleBlogPost = () => {
       if (!blogId) return;
       const docRef = doc(db, collection, blogId);
 
-
-
-      
-
-     
-
       // Update Firestore
       await updateDoc(docRef, {
         img: cover || blog?.img,
@@ -146,7 +139,7 @@ const SingleBlogPost = () => {
 
       // Upload the new cover image
       const data = await uploadFile(file);
-      setCover(data?.Location);
+      setCover(data);
 
       toast.success("Cover image updated successfully.");
     } catch (error) {
@@ -162,30 +155,33 @@ const SingleBlogPost = () => {
       toast.error("Please choose an Image...");
       return;
     }
-  
+
     // Extract existing image URLs from desc
     const existingImageUrls = extractImageUrls(desc);
-  
+
     // Check if any image has been removed from the editor
     const updatedDesc = desc; // This should be the latest editor content
     const updatedImageUrls = extractImageUrls(updatedDesc);
-  
+
     const removedImages = existingImageUrls.filter(
       (url) => !updatedImageUrls.includes(url)
     );
-  
+
     // Delete only removed images from S3
-    await Promise.all(removedImages.map((url) => deleteFile(getKeyFromUrl(url))));
-  
+    await Promise.all(
+      removedImages.map((url) => deleteFile(getKeyFromUrl(url)))
+    );
+
     // Upload new image
     const data = await uploadFile(file);
-    setContentImg(data?.Location);
-  
-    // Add the new image to the editor content
-    setDesc((prev) => prev + `<p><img src="${data?.Location}" alt="Uploaded Image"/></p>`);
-  };
+    setContentImg(data);
 
-  
+    // Add the new image to the editor content
+    setDesc(
+      (prev) =>
+        prev + `<p><img src="${data}" alt="Uploaded Image"/></p>`
+    );
+  };
 
   if (loadingBlog) {
     return (
