@@ -5,13 +5,13 @@ import { getAuth } from "firebase/auth";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCk_iT-iLXZ_bWEC7u3QYJWfDLCEXOBH3Y",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "enmsgo-landingpage.firebaseapp.com",
   projectId: "enmsgo-landingpage",
   storageBucket: "enmsgo-landingpage.firebasestorage.app",
-  messagingSenderId: "62701350434",
-  appId: "1:62701350434:web:84cd315f6393e31353e47b",
-  measurementId: "G-TVTWBQ3HPN",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
 export const app = initializeApp(firebaseConfig);

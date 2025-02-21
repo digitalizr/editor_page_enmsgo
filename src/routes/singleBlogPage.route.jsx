@@ -10,7 +10,8 @@ import "react-quill-new/dist/quill.snow.css";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import { toast } from "react-toastify";
-import { uploadFile } from "../config/awsConfig";
+import { uploadFile, deleteFile } from "../config/awsConfig";
+import { getKeyFromUrl, extractImageUrls } from "../helpers/helpers";
 
 const SingleBlogPost = () => {
   const location = useLocation();
@@ -27,7 +28,7 @@ const SingleBlogPost = () => {
   const [loading, setLoading] = useState(false);
   const [loadingBlog, setLoadingBlog] = useState(false);
   const [contentImg, setContentImg] = useState("");
-
+  const [newContentImages, setNewContentImages] = useState([]);
   useEffect(() => {
     getBlog();
   }, []);
@@ -68,13 +69,28 @@ const SingleBlogPost = () => {
 
   const handleDelete = async () => {
     setLoading(true);
+
     try {
+      // Extract the key from the cover URL
+      const coverKey = getKeyFromUrl(cover);
+
+      const imageUrls = extractImageUrls(desc);
+      const imageKeys = imageUrls.map((url) => getKeyFromUrl(url));
+
+      if (coverKey) await deleteFile(coverKey);
+
+      // Delete all images in the blog content
+      await Promise.all(imageKeys.map((key) => deleteFile(key)));
+
+      // Delete document from Firestore
       await deleteDoc(doc(db, collection, blogId));
+
       setLoading(false);
       toast.success(`${collection} Deleted Successfully...`);
       navigate("/");
     } catch (error) {
-      toast.error("Something went wrong... : ", error);
+      console.error("Error deleting:", error);
+      toast.error(`Something went wrong: ${error.message || error}`);
       setLoading(false);
     } finally {
       setLoading(false);
@@ -86,22 +102,26 @@ const SingleBlogPost = () => {
     try {
       if (!blogId) return;
       const docRef = doc(db, collection, blogId);
+
+
+
+      
+
+     
+
+      // Update Firestore
       await updateDoc(docRef, {
         img: cover || blog?.img,
         title,
         subTitle,
-        desc,
+        desc: desc,
       });
-      setLoading(false);
+
       toast.success(`${collection} Updated Successfully`);
       setModalIsOpen(false);
       getBlog();
     } catch (error) {
-      setLoading(false);
-      toast.error(
-        `Something went wrong while updating ${collection}... : `,
-        error
-      );
+      toast.error(`Something went wrong while updating: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -113,8 +133,27 @@ const SingleBlogPost = () => {
       toast.error("Please choose an Image...");
       return;
     }
-    const data = await uploadFile(file);
-    setCover(data?.Location);
+
+    setLoading(true);
+    try {
+      // Delete the old cover image if it exists
+      if (cover) {
+        const oldCoverKey = getKeyFromUrl(cover);
+        if (oldCoverKey) {
+          await deleteFile(oldCoverKey);
+        }
+      }
+
+      // Upload the new cover image
+      const data = await uploadFile(file);
+      setCover(data?.Location);
+
+      toast.success("Cover image updated successfully.");
+    } catch (error) {
+      toast.error(`Failed to update cover image: ${error.message}`);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleContentImageChange = async (event) => {
@@ -123,9 +162,30 @@ const SingleBlogPost = () => {
       toast.error("Please choose an Image...");
       return;
     }
+  
+    // Extract existing image URLs from desc
+    const existingImageUrls = extractImageUrls(desc);
+  
+    // Check if any image has been removed from the editor
+    const updatedDesc = desc; // This should be the latest editor content
+    const updatedImageUrls = extractImageUrls(updatedDesc);
+  
+    const removedImages = existingImageUrls.filter(
+      (url) => !updatedImageUrls.includes(url)
+    );
+  
+    // Delete only removed images from S3
+    await Promise.all(removedImages.map((url) => deleteFile(getKeyFromUrl(url))));
+  
+    // Upload new image
     const data = await uploadFile(file);
     setContentImg(data?.Location);
+  
+    // Add the new image to the editor content
+    setDesc((prev) => prev + `<p><img src="${data?.Location}" alt="Uploaded Image"/></p>`);
   };
+
+  
 
   if (loadingBlog) {
     return (
@@ -163,10 +223,23 @@ const SingleBlogPost = () => {
             className={styles.editButton}
             onClick={() => setModalIsOpen(true)}
           >
-            <FaEdit /> Edit {collection}
+            {loading ? (
+              <Spinner />
+            ) : (
+              <>
+                {" "}
+                <FaEdit /> Edit {collection}{" "}
+              </>
+            )}
           </button>
           <button className={styles.deleteButton} onClick={handleDelete}>
-            <FaTrash /> Delete {collection}
+            {loading ? (
+              <Spinner />
+            ) : (
+              <>
+                <FaTrash /> Delete {collection}
+              </>
+            )}
           </button>
         </div>
         <Modal

@@ -3,6 +3,8 @@ import styles from "./Navbar.module.css";
 import { Link, NavLink } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
+import { CiLogin } from "react-icons/ci";
+
 
 // pgl wo h jo roz same kaam kre aur kahe nateeja alag ho
 
@@ -12,6 +14,7 @@ function Navbar() {
   const auth = useSelector((state) => state.auth.isAuthenticated);
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
+
 
   return (
     <div className={styles.navbarContainer}>
@@ -129,6 +132,9 @@ function Navbar() {
           <div>
             <img src="/Globe.png" alt="" />
             <h6>EN</h6>
+            <button className={styles.logoutBtn}>
+               <CiLogin /> <span className={styles.logoutText}>Logout</span>
+            </button>
           </div>
           <Link to={"/login"} className={styles.getStarted}>
             <img src={user?.photoURL || "/avatar.png"} alt="userimg" />
