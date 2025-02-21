@@ -15,6 +15,8 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import SingleBlogPost from "./routes/singleBlogPage.route.jsx";
 import UseCase from "./routes/useCasePage.route.jsx";
 import EnergyManagement from "./routes/energyManagement.route.jsx";
+import ThemeProvider from "./context/ThemeContext";
+import ValidateRoute from "./components/ValidateRoute";
 
 const router = createBrowserRouter([
   {
@@ -50,11 +52,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <LoginPage />,
+        element: (
+          <ValidateRoute>
+            <LoginPage />
+          </ValidateRoute>
+        ),
       },
       {
         path: "/register",
-        element: <RegisterPage />,
+        element: (
+          <ValidateRoute>
+            <RegisterPage />
+          </ValidateRoute>
+        ),
       },
     ],
   },
@@ -63,8 +73,10 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
-      <ToastContainer position="bottom-right" />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <ToastContainer position="bottom-right" />
+      </ThemeProvider>
     </Provider>
     ,
   </StrictMode>

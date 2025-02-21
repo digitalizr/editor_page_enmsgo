@@ -6,7 +6,7 @@ import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import Heading from "../components/common/introHeading/Heading";
-import EnerygyMgtBox from "../components/common/containerBox/EnerygyMgtBox";
+import CardComp from "../components/cardComp/CardComp";
 
 const EnergyManagement = () => {
   const [loading, setLoading] = useState(false);
@@ -59,8 +59,8 @@ const EnergyManagement = () => {
         <h2>Energy Management.</h2>
         <div className={styles.containerWrapper}>
           {energyMgtList.length > 0 ? (
-            energyMgtList.map((blog) => {
-              return <EnerygyMgtBox data={blog} key={blog?.id}/>
+            energyMgtList.map((energymgt) => {
+              return <CardComp data={energymgt} collection={"energy-management"} key={energymgt?.id} />
             })
           ) : (
             <h3 style={{ color: "white" }}>

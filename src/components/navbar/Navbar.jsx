@@ -4,8 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { CiLogin } from "react-icons/ci";
-
-
+import { doSignOut } from "../../config/auth";
 // pgl wo h jo roz same kaam kre aur kahe nateeja alag ho
 
 function Navbar() {
@@ -15,6 +14,9 @@ function Navbar() {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
 
+  const handleLogout = () => {
+    doSignOut(dispatch);
+  };
 
   return (
     <div className={styles.navbarContainer}>
@@ -88,12 +90,14 @@ function Navbar() {
               style={
                 open ? { flexDirection: "column" } : { flexDirection: "row" }
               }
-            >
-              <img src="/Globe.png" alt="" />
-              <h6>EN</h6>
-            </div>
-            <Link to={"/login"}  className={styles.getStarted} >
-              <img src={ user?.photoURL   || "/avatar.png"} alt="userimg" />
+            ></div>
+             {auth && (
+            <button className={styles.logoutBtn} onClick={handleLogout}>
+              <CiLogin /> Logout
+            </button>
+          )}
+            <Link to={"/login"} className={styles.getStarted}>
+              <img src={user?.photoURL || "/avatar.png"} alt="userimg" />
               <button>Get Started</button>
             </Link>
           </div>
@@ -129,13 +133,11 @@ function Navbar() {
           Energy Management
         </NavLink>
         <div className={styles.mobEndContainer}>
-          <div>
-            <img src="/Globe.png" alt="" />
-            <h6>EN</h6>
-            <button className={styles.logoutBtn}>
-               <CiLogin /> <span className={styles.logoutText}>Logout</span>
+          {auth && (
+            <button className={styles.logoutBtn} onClick={handleLogout}>
+              <CiLogin /> Logout
             </button>
-          </div>
+          )}
           <Link to={"/login"} className={styles.getStarted}>
             <img src={user?.photoURL || "/avatar.png"} alt="userimg" />
             <button>Get Started</button>

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/useCase.module.css";
-import UseCaseBox from "../components/common/containerBox/UseCaseBox";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import Heading from "../components/common/introHeading/Heading";
+import CardComp from "../components/cardComp/CardComp";
 
 const UseCase = () => {
   const [loading, setLoading] = useState(false);
@@ -60,7 +60,7 @@ const UseCase = () => {
         <div className={styles.containerWrapper}>
           {useCaseList.length > 0 ? (
             useCaseList.map((useCase) => {
-              return <UseCaseBox data={useCase} key={useCase?.id} />;
+              return <CardComp data={useCase} collection={"usecase"} key={useCase?.id} />
             })
           ) : (
             <h3 style={{ color: "white" }}>

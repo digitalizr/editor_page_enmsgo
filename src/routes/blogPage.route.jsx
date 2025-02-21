@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/blog.module.css";
-import BlogBox from "../components/common/containerBox/BlogBox";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../config/firebaseConfig";
 import { Spinner } from "react-activity";
 import "react-activity/dist/library.css";
 import Heading from "../components/common/introHeading/Heading";
+import CardComp from "../components/cardComp/CardComp";
 
 const BlogPage = () => {
   const [loading, setLoading] = useState(false);
@@ -60,7 +60,7 @@ const BlogPage = () => {
         <div className={styles.containerWrapper}>
           {blogList.length > 0 ? (
             blogList.map((blog) => {
-              return <BlogBox data={blog} key={blog?.id} />;
+              return <CardComp data={blog} collection={"blogs"} key={blog?.id} />
             })
           ) : (
             <h3 style={{ color: "white" }}>

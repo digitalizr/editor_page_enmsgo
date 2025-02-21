@@ -1,5 +1,8 @@
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
-
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
 
 const S3_BUCKET = import.meta.env.VITE_AWS_BUCKET_NAME;
 const REGION = import.meta.env.VITE_AWS_REGION;
@@ -14,7 +17,6 @@ const s3 = new S3Client({
   },
 });
 
-
 export const uploadFile = async (file) => {
   if (!file) return alert("Please select a file.");
   const arrayBuffer = await file.arrayBuffer();
@@ -23,23 +25,19 @@ export const uploadFile = async (file) => {
   const params = {
     Bucket: S3_BUCKET,
     Key: fileName,
-    Body: new Uint8Array(arrayBuffer),  
+    Body: new Uint8Array(arrayBuffer),
     ContentType: file.type,
   };
 
   try {
     const upload = await s3.send(new PutObjectCommand(params));
     const fileUrl = `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${fileName}`;
-    console.log("File URL:", fileUrl);
     return fileUrl;
   } catch (error) {
     console.error("Upload error:", error);
     alert("Upload failed!");
   }
 };
-
-
-
 
 export const deleteFile = async (fileKey) => {
   if (!fileKey) {
@@ -61,65 +59,3 @@ export const deleteFile = async (fileKey) => {
     return { success: false, message: "File deletion failed.", error };
   }
 };
-
-
-
-
-
-
-
-// export const uploadFile = async (file) => {
-//   if (!file) return alert("Please select a file.");
-
-
-//   AWS.config.update({
-//     accessKeyId: ACCESS_KEY,
-//     secretAccessKey: SECRET_KEY,
-//   });
-
-//   const s3 = new S3({
-//     region: REGION,
-//   });
-
-//   const params = {
-//     Bucket: S3_BUCKET,
-//     Key: `${Date.now()}-${file.name}`,
-//     Body: file,
-//   };
-
-//   try {
-//     const upload = await s3.upload(params).promise();
-//     return upload;
-//   } catch (error) {
-//     console.error("Upload error:", error);
-//     alert("Upload failed!");
-//   }
-// };
-
-
-
-
-// export const deleteFile = async (fileKey) => {
-//   if (!fileKey) {
-//     console.error("File key is required.");
-//     return;
-//   }
-
-//   const s3 = new S3({
-//     region: REGION,
-//   });
-
-//   const params = {
-//     Bucket: S3_BUCKET,
-//     Key: fileKey,
-//   };
-
-//   try {
-//     await s3.deleteObject(params).promise();
-//     console.log(`File deleted successfully: ${fileKey}`);
-//     return { success: true, message: "File deleted successfully." };
-//   } catch (error) {
-//     console.error("Error deleting file:", error);
-//     return { success: false, message: "File deletion failed.", error };
-//   }
-// };

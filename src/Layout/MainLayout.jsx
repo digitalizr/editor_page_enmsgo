@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { setAuth } from "../redux/features/authSlice";
 import Cookies from "js-cookie";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import Footer from "../components/footer/Footer";
 
 const MainLayout = () => {
   const dispatch = useDispatch();
@@ -38,10 +37,9 @@ const MainLayout = () => {
   }, [dispatch]);
 
   return (
-    <div className={styles.layoutcontainer}>
+    <div className={styles.layoutcontainer}  >
       <Navbar />
       <Outlet />
-      {/* <Footer /> */}
     </div>
   );
 };

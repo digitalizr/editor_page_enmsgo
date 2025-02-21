@@ -9,6 +9,8 @@ import {
   GoogleAuthProvider,
   sendSignInLinkToEmail,
 } from "firebase/auth";
+import { clearAuth } from "../redux/features/authSlice.js";
+import Cookies from "js-cookie";
 
 export const doCreateUserWithEmailAndPassword = async (email, password) => {
   return createUserWithEmailAndPassword(auth, email, password);
@@ -21,7 +23,7 @@ export const doSignInWithEmailAndPassword = (email, password) => {
 export const doSignInWithEmail = async (email) => {
   const actionCodeSettings = {
     // url: "http://localhost:5173/",
-    url :window.location.origin,
+    url: window.location.origin,
     handleCodeInApp: true,
   };
   return sendSignInLinkToEmail(auth, email, actionCodeSettings);
@@ -32,8 +34,19 @@ export const doSignInWithGoogle = async () => {
   return signInWithPopup(auth, provider);
 };
 
-export const doSignOut = () => {
-  return auth.signOut();
+export const doSignOut = (dispatch) => {
+  return auth
+    .signOut()
+    .then(() => {
+      // Clear authentication state in Redux
+      dispatch(clearAuth());
+
+      // Remove any authentication-related cookies
+      Cookies.remove("user");
+    })
+    .catch((error) => {
+      console.error("Sign out error:", error);
+    });
 };
 
 export const doPasswordReset = (email) => {
