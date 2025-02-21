@@ -12,6 +12,7 @@ import "react-activity/dist/library.css";
 import { toast } from "react-toastify";
 import { uploadFile, deleteFile } from "../config/awsConfig";
 import { getKeyFromUrl, extractImageUrls } from "../helpers/helpers";
+import { useSelector } from "react-redux";
 
 const SingleBlogPost = () => {
   const location = useLocation();
@@ -28,6 +29,8 @@ const SingleBlogPost = () => {
   const [loading, setLoading] = useState(false);
   const [loadingBlog, setLoadingBlog] = useState(false);
   const [contentImg, setContentImg] = useState("");
+  const auth = useSelector((state) => state.auth.isAuthenticated);
+
   useEffect(() => {
     getBlog();
   }, []);
@@ -39,6 +42,13 @@ const SingleBlogPost = () => {
           prev + `<p><img src="${contentImg}" alt="Uploaded Image"/></p>`
       );
   }, [contentImg]);
+
+  const handleModel = () =>{
+    if(!auth){
+      return toast.error("You should Login First")
+    }
+    setModalIsOpen(true)
+  }
 
   const getBlog = async () => {
     setLoadingBlog(true);
@@ -67,6 +77,9 @@ const SingleBlogPost = () => {
   };
 
   const handleDelete = async () => {
+    if(!auth){
+      return toast.error("You should Login First")
+    }
     setLoading(true);
 
     try {
@@ -97,6 +110,9 @@ const SingleBlogPost = () => {
   };
 
   const handleEdit = async () => {
+    if(!auth){
+      return toast.error("You should Login First")
+    }
     setLoading(true);
     try {
       if (!blogId) return;
@@ -121,6 +137,9 @@ const SingleBlogPost = () => {
   };
 
   const handleFileChange = async (event) => {
+    if(!auth){
+      return toast.error("You should Login First")
+    }
     const file = event.target.files[0];
     if (!file) {
       toast.error("Please choose an Image...");
@@ -150,6 +169,9 @@ const SingleBlogPost = () => {
   };
 
   const handleContentImageChange = async (event) => {
+    if(!auth){
+      return toast.error("You should Login First")
+    }
     const file = event.target.files[0];
     if (!file) {
       toast.error("Please choose an Image...");
@@ -217,7 +239,7 @@ const SingleBlogPost = () => {
         <div className={styles.buttonContainer}>
           <button
             className={styles.editButton}
-            onClick={() => setModalIsOpen(true)}
+            onClick={handleModel}
           >
             {loading ? (
               <Spinner />

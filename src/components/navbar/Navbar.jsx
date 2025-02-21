@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./Navbar.module.css";
 import { Link, NavLink } from "react-router-dom";
-import Cookies from "js-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { CiLogin } from "react-icons/ci";
 import { doSignOut } from "../../config/auth";
